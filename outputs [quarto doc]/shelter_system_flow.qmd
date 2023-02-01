@@ -1,13 +1,21 @@
 ---
 title: "Flow Between Shelter System and Permanent Housing"
 author: "Aliyah Maxine Ramos"
+date: "`r Sys.time()`"
+date-format: "D MMMM YYYY"
+abstract: "This is the abstract. This is the abstract. This is the abstract."
 format: pdf
-# editor: visual
-# bibliography: references.bib
+bibliography: references.bib
+execute:
+  echo: false
+  warning: false
+  message: false
 ---
 
 ```{r}
 #| echo: false
+#| include: false
+
 options(repos = list(CRAN="http://cran.rstudio.com/"))
 
 # set-up packages
@@ -16,12 +24,20 @@ install.packages("tidyverse")
 # read packages
 library(opendatatoronto)
 library(tidyverse)
-library(dplyr)
-library(ggplot2)
+library(here)
 ```
+
+# 1 Introduction
+
+Hi
+
+# 2 Data
+
+Hi @citetidyverse
 
 ```{r}
 #| echo: false
+#| include: false
 
 # download Toronto Shelter System Flow Data
 
@@ -44,9 +60,87 @@ data
 ```
 
 ```{r}
-#| echo: false
-#| include: false
-# graph of returned from housing data for families
+# defining variables
+cleaned_shelter_system_data <- read.csv(here::here("inputs/data/cleaned_shelter_system_data.csv"))
 
+returned_from_housing_data <- read.csv(here::here("inputs/data/returned_from_housing_data.csv"))
+
+moved_to_housing_data <- read.csv(here::here("inputs/data/moved_to_housing_data.csv"))
 ```
 
+
+```{r}
+#| echo: false
+#| warning: false
+
+#### RETURNED FROM HOUSING ###
+### Graph return from housing for families ###
+ggplot(data=returned_from_housing_data, aes(x = year, y = returned_from_housing, fill = factor(year))) +
+  geom_bar(stat = "identity") +
+  ggtitle("Families Returned From Permanent Housing Between 2018 and 2022") +
+  theme_minimal() +
+  labs(
+    x = "Year",
+    y = "Returned from Housing"
+  )+
+  theme(legend.position = "none") +
+  scale_fill_brewer(palette = "set3")
+```
+
+```{r}
+#| echo: false
+#| warning: false
+
+#### MOVED TO HOUSING ####
+### Graph moved to housing for families ###
+ggplot(data=moved_to_housing_data, aes(x = year, y = moved_to_housing, fill = factor(year))) +
+  geom_bar(stat = "identity") +
+  ggtitle("Families Moved to Permanent Housing Between 2018 and 2022") +
+  theme_minimal() +
+  labs(
+    x = "Year",
+    y = "Moved to Housing"
+  )+
+  theme(legend.position = "none") +
+  scale_fill_brewer(palette = "set3")
+```
+
+```{r}
+# returned from housing mean table
+cleaned_shelter_system_data |>
+  select(group, year, returned_from_housing) |>
+  filter(group == "Families") |>
+  group_by(year) |>
+  summarise(y1 = mean(returned_from_housing)) |>
+  knitr::kable()
+```
+
+```{r}
+# moved to housing mean table
+cleaned_shelter_system_data |>
+  select(group, year, moved_to_housing) |>
+  filter(group == "Families") |>
+  group_by(year) |>
+  summarise(y1 = mean(moved_to_housing)) |>
+  knitr::kable()
+```
+
+
+# 3 Discussion
+
+Hi
+
+# 4 Limitations
+
+Hi [@citetidyverse]
+
+\newpage
+
+# References
+
+```{r}
+#| echo: false
+#| include: false
+
+citation("tidyverse")
+```
