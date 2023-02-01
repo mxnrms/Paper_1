@@ -1,8 +1,5 @@
 # download data
 
-install.packages("usethis")
-install.packages("gitcreds")
-
 ### Read in the data ###
 
 library(opendatatoronto)

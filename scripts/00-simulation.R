@@ -29,3 +29,53 @@ write_csv(
   x = cleaned_shelter_system_data,
   file = "cleaned_shelter_system_data.csv"
 )
+
+#### RETURNED FROM HOUSING ####
+## Select families ##
+returned_from_housing_data <-
+  cleaned_shelter_system_data |>
+  filter(
+    group == 'Families'
+  )
+## Selecting year and returned_from_housing variables ##
+returned_from_housing_data <-
+  returned_from_housing_data |>
+  select(
+    year,
+    returned_from_housing
+  )
+## Group year and sum up return_from_housing ##
+returned_from_housing_data <-
+  returned_from_housing_data %>%
+  group_by(year) %>%
+  summarise(returned_from_housing = sum(returned_from_housing))
+## Save cleaned RFH data ##
+write_csv(
+  x = returned_from_housing_data,
+  file = "returned_from_housing_data.csv"
+)
+
+#### MOVED TO HOUSING ####
+## Select families ##
+moved_to_housing_data <-
+  cleaned_shelter_system_data |>
+  filter(
+    group == 'Families'
+  )
+### Selecting moved_to_housing variable ###
+moved_to_housing_data <-
+  moved_to_housing_data |>
+  select(
+    year,
+    moved_to_housing
+  )
+## Group year and sum up return_from_housing ##
+moved_to_housing_data <-
+  moved_to_housing_data %>%
+  group_by(year) %>%
+  summarise(moved_to_housing = sum(moved_to_housing))
+## Save cleaned data ##
+write_csv(
+  x = moved_to_housing_data,
+  file = "moved_to_housing_data.csv"
+)
