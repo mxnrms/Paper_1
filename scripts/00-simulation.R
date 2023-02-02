@@ -74,6 +74,11 @@ returned_from_housing_youthdata <-
   returned_from_housing_youthdata %>%
   group_by(year) %>%
   summarise(returned_from_housing = sum(returned_from_housing))
+## Save cleaned RFH youth data ##
+write_csv(
+  x = returned_from_housing_data,
+  file = "returned_from_housing_youthdata.csv"
+)
 
 #### MOVED TO HOUSING ####
 ## FAMILIES ##
@@ -105,7 +110,7 @@ write_csv(
 moved_to_housing_youthdata <-
   cleaned_shelter_system_data |>
   filter(
-    group == 'Families'
+    group == 'Youth'
   )
 ### Selecting moved_to_housing variable ###
 moved_to_housing_youthdata <-
@@ -119,3 +124,8 @@ moved_to_housing_youthdata <-
   moved_to_housing_youthdata %>%
   group_by(year) %>%
   summarise(moved_to_housing = sum(moved_to_housing))
+## Save cleaned MTH youth data ##
+write_csv(
+  x = moved_to_housing_data,
+  file = "moved_to_housing_youthdata.csv"
+)

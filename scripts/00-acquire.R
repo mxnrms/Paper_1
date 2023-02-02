@@ -63,7 +63,7 @@ ggplot(data=moved_to_housing_data, aes(x = year, y = moved_to_housing, fill = ye
 ### LINE Graph moved to housing for youth ###
 ggplot(data=moved_to_housing_youthdata, aes(x = year, y = moved_to_housing, fill = year)) +
   geom_line(stat = "identity") +
-  ggtitle("Youth Moved to Permanent Housing Between 2018 and 2022") +
+  ggtitle("Youth Moved to Permanent Housing \n Between 2018 and 2022") +
   theme_minimal() +
   labs(
     x = "Year",
