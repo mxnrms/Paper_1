@@ -21,8 +21,12 @@ options(repos = list(CRAN="http://cran.rstudio.com/"))
 install.packages("opendatatoronto")
 install.packages("tidyverse")
 # read packages
-library(opendatatoronto)
 library(tidyverse)
+library(opendatatoronto)
+library(dplyr)
+library(janitor)
+library(knitr)
+library(kableExtra)
 library(here)
 ```
 
@@ -32,7 +36,9 @@ Hi
 
 # 2 Data
 
-R [@citeR], R packages "tidyverse" [@citetidyverse], "dplyr" [@citedplyr], "janitor" [@citejanitor], "here" [@citehere], and "knitr" [@citeknitr] are used to produce an extract of the cleaned dataset.
+The data is obtained from the dataset "Toronto Shelter System Flow" found in the Toronto Open Data Portal [@citedataportal]. Some finding about the dataset [@citedataset].
+
+R [@citeR], R packages "tidyverse" [@citetidyverse], "dplyr" [@citedplyr], "janitor" [@citejanitor], "here" [@citehere], "kableExtra" [@citekableextra] and "knitr" [@citeknitr] are used to produce an extract of the cleaned dataset.
 
 ```{r}
 #| include: false
@@ -71,7 +77,7 @@ moved_to_housing_data <- read.csv(here::here("inputs/data/moved_to_housing_data.
 ### LINE Graph return from housing for families ###
 ggplot(data=returned_from_housing_data, aes(x = year, y = returned_from_housing, fill = year)) +
   geom_line(stat = "identity") +
-  ggtitle("Families Returned From Permanent Housing Between 2018 and 2022") +
+  ggtitle("Families Returned From Permanent Housing \n Between 2018 and 2022") +
   theme_minimal() +
   labs(
     x = "Year",
@@ -85,7 +91,7 @@ ggplot(data=returned_from_housing_data, aes(x = year, y = returned_from_housing,
 ### LINE Graph moved to housing for families ###
 ggplot(data=moved_to_housing_data, aes(x = year, y = moved_to_housing, fill = year)) +
   geom_line(stat = "identity") +
-  ggtitle("Families Moved to Permanent Housing Between 2018 and 2022") +
+  ggtitle("Families Moved to Permanent Housing \n Between 2018 and 2022") +
   theme_minimal() +
   labs(
     x = "Year",
