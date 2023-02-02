@@ -51,3 +51,18 @@ ggplot(data=moved_to_housing_data, aes(x = year, y = moved_to_housing, fill = ye
 
 
 #### TABLE ####
+# returned from housing mean table
+cleaned_shelter_system_data |>
+  select(group, year, returned_from_housing) |>
+  filter(group == "Families") |>
+  group_by(year) |>
+  summarise(families_mean = mean(returned_from_housing)) |>
+  knitr::kable()
+
+# moved to housing mean table
+cleaned_shelter_system_data |>
+  select(group, year, moved_to_housing) |>
+  filter(group == "Families") |>
+  group_by(year) |>
+  summarise(families_mean = mean(moved_to_housing)) |>
+  knitr::kable()
