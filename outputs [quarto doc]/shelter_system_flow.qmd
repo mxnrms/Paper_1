@@ -67,17 +67,17 @@ data
 # defining variables
 cleaned_shelter_system_data <- read.csv(here::here("inputs/data/cleaned_shelter_system_data.csv"))
 
-returned_from_housing_data <- read.csv(here::here("inputs/data/returned_from_housing_data.csv"))
+returned_from_housing_youthdata <- read.csv(here::here("inputs/data/returned_from_housing_youthdata.csv"))
 
-moved_to_housing_data <- read.csv(here::here("inputs/data/moved_to_housing_data.csv"))
+moved_to_housing_youthdata <- read.csv(here::here("inputs/data/moved_to_housing_youthdata.csv"))
 ```
 
 ```{r}
 #### RETURNED FROM HOUSING ###
-### LINE Graph return from housing for families ###
-ggplot(data=returned_from_housing_data, aes(x = year, y = returned_from_housing, fill = year)) +
+### LINE Graph return from housing for youth ###
+ggplot(data=returned_from_housing_youthdata, aes(x = year, y = returned_from_housing, fill = year)) +
   geom_line(stat = "identity") +
-  ggtitle("Families Returned From Permanent Housing \n Between 2018 and 2022") +
+  ggtitle("Youth Returned From Permanent Housing Between 2018 and 2022") +
   theme_minimal() +
   labs(
     x = "Year",
@@ -88,10 +88,10 @@ ggplot(data=returned_from_housing_data, aes(x = year, y = returned_from_housing,
 
 ```{r}
 #### MOVED TO HOUSING ####
-### LINE Graph moved to housing for families ###
-ggplot(data=moved_to_housing_data, aes(x = year, y = moved_to_housing, fill = year)) +
+### LINE Graph moved to housing for youth ###
+ggplot(data=moved_to_housing_youthdata, aes(x = year, y = moved_to_housing, fill = year)) +
   geom_line(stat = "identity") +
-  ggtitle("Families Moved to Permanent Housing \n Between 2018 and 2022") +
+  ggtitle("Youth Moved to Permanent Housing \n Between 2018 and 2022") +
   theme_minimal() +
   labs(
     x = "Year",
