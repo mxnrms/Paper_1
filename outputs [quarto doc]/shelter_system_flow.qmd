@@ -1,5 +1,5 @@
 ---
-title: "Flow Between Shelter System and Permanent Housing"
+title: "The Flow of Youth Experiencing Homelessness Between Shelter Systems and Permanent Housing During the Pandemic"
 author: "Aliyah Maxine Ramos"
 date: "`r Sys.time()`"
 date-format: "D MMMM YYYY"
@@ -10,6 +10,7 @@ execute:
   echo: false
   warning: false
   message: false
+thanks: "Code and data are available at: https://github.com/mxnrms/Paper_1.git"
 ---
 
 ```{r}
@@ -67,21 +68,60 @@ data
 # defining variables
 cleaned_shelter_system_data <- read.csv(here::here("inputs/data/cleaned_shelter_system_data.csv"))
 
-returned_from_housing_youthdata <- read.csv(here::here("inputs/data/returned_from_housing_youthdata.csv"))
+returned_from_housing_data <- read.csv(here::here("inputs/data/returned_from_housing_data.csv"))
 
-moved_to_housing_youthdata <- read.csv(here::here("inputs/data/moved_to_housing_youthdata.csv"))
+moved_to_housing_data <- read.csv(here::here("inputs/data/moved_to_housing_data.csv"))
+
+all_returned_from_housing_data <- read.csv(here::here("inputs/data/all_returned_from_housing_data.csv"))
+
+all_moved_to_housing_data <- read.csv(here::here("inputs/data/all_moved_to_housing_data.csv"))
 ```
 
 ```{r}
-#### RETURNED FROM HOUSING ###
+#### ALL RETURNED FROM HOUSING ###
+### Overall Data for Returned_From_Housing ###
+all_returned_from_housing_data |>
+  ggplot(mapping = aes(x = year, y = returned_from_housing, fill = group, label = returned_from_housing)) +
+  geom_bar(stat = "identity") + 
+  geom_text(size = 1, position = position_stack(vjust = 0.5)) +
+  labs(
+    title = "People Experiencing Homelessness Returned From Housing",
+    x = "Year",
+    y = "Number of People", 
+    fill = "Groups"
+  ) + 
+  theme_light()
+```
+
+```{r}
+#### ALL MOVED TO HOUSING ###
+### Overall Data for moved_to_housing ###
+all_moved_to_housing_data |>
+  ggplot(mapping = aes(x = year, y = moved_to_housing, fill = group, label = moved_to_housing)) +
+  geom_bar(stat = "identity") + 
+  geom_text(size = 1, position = position_stack(vjust = 0.5)) +
+  labs(
+    title = "People Experiencing Homelessness Moved to Housing",
+    x = "Year",
+    y = "Number of People", 
+    fill = "Groups"
+  ) + 
+  theme_light()
+```
+
+
+
+```{r}
+#### YOUTH RETURNED FROM HOUSING ###
 ### LINE Graph return from housing for youth ###
-ggplot(data=returned_from_housing_youthdata, aes(x = year, y = returned_from_housing, fill = year)) +
-  geom_line(stat = "identity") +
-  ggtitle("Youth Returned From Permanent Housing Between 2018 and 2022") +
+ggplot(data=returned_from_housing_data, 
+       aes(x = year, y = returned_from_housing, fill = year)) +
+  geom_line(aes(group=1)) +
+  ggtitle("Youth Returned From Permanent Housing \n Between 2018 and 2022") +
   theme_minimal() +
   labs(
     x = "Year",
-    y = "Returned from Housing"
+    y = "Number of Youth Returned from Housing"
   )+
   theme(legend.position = "none")
 ```
@@ -89,34 +129,34 @@ ggplot(data=returned_from_housing_youthdata, aes(x = year, y = returned_from_hou
 ```{r}
 #### MOVED TO HOUSING ####
 ### LINE Graph moved to housing for youth ###
-ggplot(data=moved_to_housing_youthdata, aes(x = year, y = moved_to_housing, fill = year)) +
-  geom_line(stat = "identity") +
+ggplot(data=moved_to_housing_data, aes(x = year, y = moved_to_housing, fill = year)) +
+  geom_line(aes(group=1)) +
   ggtitle("Youth Moved to Permanent Housing \n Between 2018 and 2022") +
   theme_minimal() +
   labs(
     x = "Year",
-    y = "Moved to Housing"
+    y = "Number of Youth Moved to Housing"
   )+
   theme(legend.position = "none")
 ```
 
 ```{r}
-# returned from housing mean table
+# youth mean table with returned from housing, moved to housing and actively homeless
 cleaned_shelter_system_data |>
-  select(group, year, returned_from_housing) |>
-  filter(group == "Families") |>
+  select(
+    group, 
+    year, 
+    newly_identified,
+    actively_homeless,
+    returned_from_housing, 
+    moved_to_housing) |>
+  filter(group == "Youth") |>
   group_by(year) |>
-  summarise(families_mean = mean(returned_from_housing)) |>
-  knitr::kable()
-```
-
-```{r}
-# moved to housing mean table
-cleaned_shelter_system_data |>
-  select(group, year, moved_to_housing) |>
-  filter(group == "Families") |>
-  group_by(year) |>
-  summarise(families_mean = mean(moved_to_housing)) |>
+  summarise(
+    Newly_Identified = mean(newly_identified),
+    Actively_Homeless = mean(actively_homeless),
+    Return_From_Housing = mean(returned_from_housing), 
+    Moved_To_Housing = mean(moved_to_housing)) |>
   knitr::kable()
 ```
 
