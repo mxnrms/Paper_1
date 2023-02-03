@@ -3,7 +3,7 @@ title: "The Flow of Youth Experiencing Homelessness Between Shelter Systems and 
 author: "Aliyah Maxine Ramos"
 date: "`r Sys.time()`"
 date-format: "D MMMM YYYY"
-abstract: "This is the abstract."
+abstract: "Toronto has the largest homeless population in Canada, where thousands are at risk of illness or death due to the poor living conditions and lack of sufficient resources accessible to them. Homeless youth can encounter adverse effects on their mental health and well-being from living without permanent or stable housing. This paper aims to investigate the flow of youths in Toronto who are experiencing homelessness between the shelter system and permanent housing from 2018 to 2022. During this 5-year period, the rise and spread of the COVID-19 pandemic causes people experiencing homelessness to become extremely vulnerable to the virus, especially with the inadequate access to health care. By exploring the visualized trends of youths who return to the shelter system from housing and who move to housing, I observe that the trend of the latter is descending, while the former is a fluctuating trend. This finding suggests that permanent housing is not used as much as it once was pre-pandemic, and that the lack of housing could impact the mental health of youths."
 format: pdf
 bibliography: references.bib
 execute:
@@ -15,12 +15,11 @@ thanks: "Code and data are available at: https://github.com/mxnrms/Youth_Shelter
 
 ```{r}
 #| include: false
+#| echo: false
+#| warning: false
 
 options(repos = list(CRAN="http://cran.rstudio.com/"))
 
-# set-up packages
-install.packages("opendatatoronto")
-install.packages("tidyverse")
 # read packages
 library(tidyverse)
 library(opendatatoronto)
@@ -33,6 +32,8 @@ library(here)
 
 ```{r}
 #| include: false
+#| echo: false
+#| warning: false
 
 # download Toronto Shelter System Flow Data
 
@@ -55,6 +56,9 @@ data
 ```
 
 ```{r}
+#| echo: false
+#| warning: false
+
 # defining variables
 cleaned_shelter_system_data <- read.csv(here::here("inputs/data/cleaned_shelter_system_data.csv"))
 
@@ -69,15 +73,39 @@ all_moved_to_housing_data <- read.csv(here::here("inputs/data/all_moved_to_housi
 
 # 1 Introduction
 
-Introduction here.
+In view of the fact that Toronto is one of the top population centers and known to be one of the most expensive cities to live in Canada, there is an intolerably large portion of citizens that are experiencing homelessness. homelessness is defined as an individual or family in a state of having no stable or permanent housing. This state of living is thus accompanied by the lack of mobility and resources to acquire a home. Experiencing homelessness is rooted systemically in the lack of affordable housing, in the occurrence of financial, cognitive, behavioral, and physical challenges, and in racism and discrimination [@citeShoemaker]. An outcome of a lack of stable living arrangements is a short-estimated life expectancy and premature deaths related to poor physical and mental health as well as substance abuse [@citeShoemaker].
+
+Permanent housing is a support system that provides individuals and families that are coming from a former state of homelessness with housing and equip them with independent living. However, the permanent housing system in Toronto is not perfect. Ever since the exacerbated effects on the affordable housing crisis caused by the pandemic, there has only been slow responses that lack sufficient innovation to permanent housing for the unhoused [@citeZwaren]. During COVID-19, there has been an increase in temporary shelters in various locations in the city, including hotels. This helped those who are without stable housing in the hopes of preventing the spread of the virus. However, temporary housing is only a short-term solution.
+
+In the following paper, I investigate the trends of homeless youth by comparing those that have returned to shelters from permanent housing with those who have moved to permanent housing between the years of 2018 and 2022. In Section 2, I examine the data set from Open Data Toronto and the visualizations of the data. In Section 3, I analyze the common patterns regarding the flow of homeless youth between shelter system and permanent housing. I observe implications as to why these patterns are occurring and how they have an affect on the relevant population group of this paper, the youth. Additionally, I consider the weaknesses of this data analysis as well as future steps to be taken.
 
 # 2 Data
 
-The data is obtained from the dataset "Toronto Shelter System Flow" found in the Toronto Open Data Portal [@citedataportal]. Some finding about the dataset [@citedataset].
+## 2.1 Data Source
 
-R [@citeR], R packages "tidyverse" [@citetidyverse], "dplyr" [@citedplyr], "janitor" [@citejanitor], "here" [@citehere], "kableExtra" [@citekableextra] and "knitr" [@citeknitr] are used to produce an extract of the cleaned dataset.
+This report uses the Toronto Shelter System Flow data set [@citedataset] obtained from the City of Toronto's Open Data Portal [@citedataportal]. This data set is accessed and processed through the use of R [@citeR], and the R packages "tidyverse" [@citetidyverse], "dplyr" [@citedplyr], "janitor" [@citejanitor], "here" [@citehere], "kableExtra" [@citekableextra], and "knitr" [@citeknitr]. These helped in producing a cleaned version of the data set for this report.
+
+This data is published by the Shelter, Support & Housing Administration, and it updated on a monthly basis, where the last update occurred on January 17, 2023, as of February 2, 2023. This data is collected through the Shelter Management Information System (SMIS) by tracking people who are accessing the programs of overnight services, such as emergency shelters, hotel programs, warming centers, etc [@citedataset].
+
+## 2.2 Variables of Interest
+
+The Toronto Shelter System Flow data set includes 444 observations across 18 variables, such as Date, Population Groups, and different groups for age ranges. The different categories of the 8 population groups are All Populations, Chronic, Families, Youth, Single Adult, Refugees, Non-Refugees, as well as Indigenous, which was only included in January 2021.
+
+The significant variables for data analysis are the Year, Population Groups, Return From Housing, and Moved To Housing. As the Date variable included both month and year, I used the R package "tidyverse" [@citetidyverse] to separate the entities to produce a Year variable, which presents the last two digits of the year. The Youth category is the relevant population group that will be explored in this paper. The Moved To Housing variable displays the number of individuals who moved to permanent housing from shelters. Thus, the Return From Housing variable displays the number of individuals who were previously recorded as Moved To Housing and returned to the shelter system. The other variables of the data set are used to visualize the overall data of the flow of people experiencing homelessness in the shelter system in Toronto. In the analysis of this report, I will use the Toronto Shelter System Flow data set to focus on the youth population and their experience flowing between homeless shelters and permanent housing.
+
+## 2.3 Visualizing the Data
+
+The visualizations of the data from the Toronto Shelter System Flow data set will show the flow of shelter use to and from permanent housing during the 5-year time period of 2018 to 2022, where the span of 2020 to 2022 indicates the years of the COVID-19 pandemic.
+
+Before examining the trends of homeless youths and their experience with shelters and housing, I will observe the overall insights from all population groups and see how the City of Toronto's shelter system is functioning for these groups.
+
+In [@fig-1], there is a common gradually increasing trend between most population groups when returning to shelters from permanent housing. The peak of this increase happens the year after the pandemic began, where Toronto experienced the third and fourth wave of COVID-19.
+
+In [@fig-2], there is a drastic decreasing trend that is common between most population groups when moving to permanent housing from the shelter system. This decline begins in 2020, the year when the COVID-19 pandemic arisen. The trough of the trend occurs in 2021, when the third and fourth wave of the virus struck.
 
 ```{r}
+#| echo: false
+#| warning: false
 #| fig-cap: "Total number of person(s) in various population groups experiencing homelessness that returned from permanent housing in Toronto by year (2018 to 2022)."
 #| label: fig-1
 
@@ -93,14 +121,13 @@ all_returned_from_housing_data |>
     y = "Number of Person(s)", 
     fill = "Population Groups"
   ) + 
+  scale_y_continuous(breaks=seq(0, 4000, 500)) +
   theme_light()
 ```
 
-Talk about it.
-
-Also, introduce next graph.
-
 ```{r}
+#| echo: false
+#| warning: false
 #| fig-cap: "Total number of person(s) in various population groups experiencing homelessness that moved to permanent housing in Toronto by year (2018 to 2022)."
 #| label: fig-2
 
@@ -108,28 +135,42 @@ Also, introduce next graph.
 ### Overall Data for moved_to_housing ###
 all_moved_to_housing_data |>
   ggplot(mapping = aes(x = year, y = moved_to_housing, fill = group, label = moved_to_housing)) +
-  geom_bar(stat = "identity") + 
+  geom_bar(stat = "identity") +
   geom_text(size = 2, position = position_stack(vjust = 0.5)) +
   labs(
     title = "Population Groups that Moved to Housing \n Between 2018 and 2022",
     x = "Year",
-    y = "Number of Person(s)", 
+    y = "Number of Person(s)",
     fill = "Population Groups"
-  ) + 
+  ) +
+  scale_y_continuous(breaks=seq(0, 30000, 5000)) +
   theme_light()
 ```
 
-Talk about it.
+\newpage
 
-Also, talk about next graph.
+Moving from the general overview of the data from the Toronto Shelter System Flow data set to the main focus of the data analysis, I will examine the trends of the flows of youth by comparing the amount of those that return from housing and those that moved to housing.
+
+[@fig-3] displays the data for returning from housing in [@fig-3-1] and for moving to housing in [@fig-3-2] specifically for the youth population group. By comparing the two graphs side by side, I am able to identify that there is a clear difference in patterns.
+
+[@fig-3-1] shows that amount of youth that have returned to homeless shelter services from permanent housing oscillates. There is a fluctuating trend of a increasing and decreasing number of youths that return from housing.
+
+In relation to the time period in which COVID-19 within these 5 years, there is not as many number of youths that left housing during the beginning of the pandemic. However, during the second year COVID-19, there was a surge of youth who did. Then, it descended once again in 2022. This pattern is similar to the trend in all population groups that returned from housing in [@fig-1].
+
+[@fig-3-2] displays that the amount of youth that have moved to permanent housing from shelter systems a descending trend. The number of youths reaches its peak in 2019, exemplifying that there was previously an increase in youth that moved to housing pre-pandemic. This demonstrates that less and less homeless youths in Toronto are leaving shelters to move to permanent housing during the years of 2020 to 2022.
 
 ```{r}
-#| fig-cap: "Total homeless youths that returned from permanent housing in Toronto by year (2018 to 2022)."
+#| echo: false
+#| warning: false
+#| layout-ncol: 2
 #| label: fig-3
+#| fig-cap: "Two flows of youth in shelter systems in Toronto by year (2018-2022)."
+#| fig-subcap: ["Returned From Housing","Moved To Housing"]
+##| fig-cap: "Total homeless youths that returned from permanent housing in Toronto by year (2018 to 2022)."
 
 #### YOUTH RETURNED FROM HOUSING ###
 ### LINE Graph return from housing for youth ###
-ggplot(data=returned_from_housing_data, 
+ggplot(data=returned_from_housing_data,
        aes(x = year, y = returned_from_housing, fill = year)) +
   geom_line(aes(group=1)) +
   ggtitle("Homeless Youths that Returned From Housing \n Between 2018 and 2022") +
@@ -139,15 +180,6 @@ ggplot(data=returned_from_housing_data,
     y = "Number of Youths"
   )+
   theme(legend.position = "none")
-```
-
-Talk about it.
-
-Also, introduce next graph.
-
-```{r}
-#| fig-cap: "Total homeless youths that moved to permanent housing in Toronto by year (2018 to 2022)."
-#| label: fig-4
 
 #### MOVED TO HOUSING ####
 ### LINE Graph moved to housing for youth ###
@@ -162,34 +194,36 @@ ggplot(data=moved_to_housing_data, aes(x = year, y = moved_to_housing, fill = ye
   theme(legend.position = "none")
 ```
 
-Talk about it.
+[@tbl-1] consists of mean values under the variables, Newly Identified, Actively Homeless, Returned From Housing, and Moved To Housing for the data on the youth population group. The Newly Identified variable refers to people entering the shelter system for the first time and the Actively Homeless variable refers to people that have used the shelter system at least one time in the last 3 months and did not move to permanent housing [@citedataset].
 
-Also, introduce the table of means.
+\newpage
 
 ```{r}
+#| echo: false
+#| warning: false
 #| tbl-cap: "Various means of homeless youths in Toronto by year (2018 to 2022)."
 #| label: tbl-1
 
 # youth mean table with returned from housing, moved to housing and actively homeless
 cleaned_shelter_system_data |>
   select(
-    group, 
-    year, 
+    group,
+    year,
     newly_identified,
     actively_homeless,
-    returned_from_housing, 
+    returned_from_housing,
     moved_to_housing) |>
   filter(group == "Youth") |>
   group_by(year) |>
   summarise(
     Newly_Identified = mean(newly_identified),
     Actively_Homeless = mean(actively_homeless),
-    Return_From_Housing = mean(returned_from_housing), 
+    Return_From_Housing = mean(returned_from_housing),
     Moved_To_Housing = mean(moved_to_housing)) |>
   knitr::kable()
 ```
 
-Talk about it.
+What can be discerned from [@tbl-1] is that the average amount of youth who are newly identified only increases slightly pre-pandemic and decreases slightly during the years of the pandemic. This pattern is the same for the youth that are actively homeless. For the average amount of youth that return from permanent housing, there is a fluctuating trend from 2020 to 2022. As for those that move to permanent housing there is a clear decreasing trend during the same 3-year period.
 
 # 3 Discussion
 
