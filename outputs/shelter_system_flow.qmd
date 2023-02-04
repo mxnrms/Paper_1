@@ -1,5 +1,5 @@
 ---
-title: "The Flow of Youth Experiencing Homelessness Between Shelter Systems and Permanent Housing During the Pandemic"
+title: "The Flow of Youth Experiencing Homelessness Between Shelter Systems and Permanent Housing During the Pandemic in Toronto"
 author: "Aliyah Maxine Ramos"
 date: "`r Sys.time()`"
 date-format: "D MMMM YYYY"
